@@ -1,37 +1,36 @@
-import { useState } from 'react'
-import useLocalStorage from '../../hooks/useLocalStorage'
+import { useState, useEffect } from 'react'
+import { subscribeConfessions, addConfession } from '../../services/confessions'
 import styles from './ConfessionWall.module.css'
 
 const PASTEL_COLORS = ['#ffb6c1', '#dda0dd', '#e6c3f0', '#f0c3d0', '#c3d0f0', '#f0d0c3']
-const MAX_CONFESSIONS = 50
-
-const defaultConfessions = [
-  { id: 1, text: "I ate an entire pizza alone on Valentine's Day and felt POWERFUL", color: '#ffb6c1', rotation: -3 },
-  { id: 2, text: "I sent myself flowers. No regrets.", color: '#dda0dd', rotation: 2 },
-  { id: 3, text: "My cat is my valentine. She doesn't know that.", color: '#e6c3f0', rotation: -1 },
-]
 
 export default function ConfessionWall() {
-  const [confessions, setConfessions] = useLocalStorage('singletine-confessions', defaultConfessions)
+  const [confessions, setConfessions] = useState([])
   const [input, setInput] = useState('')
   const [shakeId, setShakeId] = useState(null)
+  const [submitting, setSubmitting] = useState(false)
 
-  const addConfession = (e) => {
+  useEffect(() => {
+    const unsubscribe = subscribeConfessions(setConfessions)
+    return unsubscribe
+  }, [])
+
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    if (!input.trim()) return
+    if (!input.trim() || submitting) return
 
-    const newNote = {
-      id: Date.now(),
-      text: input.trim(),
-      color: PASTEL_COLORS[Math.floor(Math.random() * PASTEL_COLORS.length)],
-      rotation: Math.floor(Math.random() * 7) - 3,
+    const color = PASTEL_COLORS[Math.floor(Math.random() * PASTEL_COLORS.length)]
+    const rotation = Math.floor(Math.random() * 7) - 3
+
+    setSubmitting(true)
+    try {
+      await addConfession(input.trim(), color, rotation)
+      setInput('')
+    } catch (err) {
+      console.error('Failed to add confession:', err)
+    } finally {
+      setSubmitting(false)
     }
-
-    const updated = [newNote, ...confessions].slice(0, MAX_CONFESSIONS)
-    setConfessions(updated)
-    setInput('')
-    setShakeId(newNote.id)
-    setTimeout(() => setShakeId(null), 500)
   }
 
   return (
@@ -39,7 +38,7 @@ export default function ConfessionWall() {
       <h2 className={styles.heading}>✧ Confession Wall ✧</h2>
       <p className={styles.subtext}>Drop your Singletine Day confessions anonymously</p>
 
-      <form className={styles.form} onSubmit={addConfession}>
+      <form className={styles.form} onSubmit={handleSubmit}>
         <textarea
           className={styles.input}
           value={input}
@@ -48,8 +47,8 @@ export default function ConfessionWall() {
           maxLength={200}
           rows={3}
         />
-        <button type="submit" className={styles.submit}>
-          ✦ Confess ✦
+        <button type="submit" className={styles.submit} disabled={submitting}>
+          {submitting ? '✦ Posting... ✦' : '✦ Confess ✦'}
         </button>
       </form>
 
