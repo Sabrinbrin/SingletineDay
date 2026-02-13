@@ -1,0 +1,26 @@
+.marquee {
+  width: 100%;
+  overflow: hidden;
+  background: linear-gradient(90deg, var(--hot-pink), var(--electric-purple), var(--cyber-blue), var(--electric-purple), var(--hot-pink));
+  padding: 8px 0;
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  color: var(--text-primary);
+  white-space: nowrap;
+  border-bottom: 2px solid var(--star-yellow);
+  border-top: 2px solid var(--star-yellow);
+}
+
+.track {
+  display: inline-flex;
+  animation: scroll-marquee 20s linear infinite;
+}
+
+.track span {
+  padding-right: 0;
+}
+
+@keyframes scroll-marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}

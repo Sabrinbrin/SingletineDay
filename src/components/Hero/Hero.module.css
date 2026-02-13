@@ -1,0 +1,64 @@
+.hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 90vh;
+  padding: 60px 20px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.sparkles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.star {
+  position: absolute;
+  color: var(--star-yellow);
+  animation: star-twinkle 2s ease-in-out infinite;
+}
+
+.title {
+  font-family: var(--font-pixel);
+  font-size: clamp(28px, 8vw, 72px);
+  background: linear-gradient(180deg, #fff, var(--hot-pink), var(--electric-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: glow-pulse 3s ease-in-out infinite;
+  margin-bottom: 24px;
+  line-height: 1.3;
+}
+
+.subtitle {
+  font-family: var(--font-retro);
+  font-size: clamp(20px, 4vw, 32px);
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin-bottom: 32px;
+}
+
+.highlight {
+  color: var(--star-yellow);
+}
+
+.badge {
+  font-family: var(--font-pixel);
+  font-size: clamp(9px, 2vw, 12px);
+  color: var(--chrome-silver);
+  border: var(--border-chrome);
+  padding: 12px 24px;
+  background: rgba(192, 192, 192, 0.1);
+  margin-bottom: 48px;
+}
+
+.scrollHint {
+  font-family: var(--font-retro);
+  font-size: 20px;
+  color: var(--hot-pink);
+  animation: float 2s ease-in-out infinite;
+}

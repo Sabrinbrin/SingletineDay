@@ -1,0 +1,53 @@
+@keyframes glow-pulse {
+  0%, 100% { text-shadow: 0 0 10px var(--hot-pink), 0 0 20px var(--hot-pink), 0 0 40px var(--neon-pink); }
+  50% { text-shadow: 0 0 20px var(--hot-pink), 0 0 40px var(--neon-pink), 0 0 60px var(--electric-purple); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes sparkle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 1; transform: scaleY(1); }
+  25% { opacity: 0.9; transform: scaleY(1.05) scaleX(0.95); }
+  50% { opacity: 1; transform: scaleY(0.95) scaleX(1.05); }
+  75% { opacity: 0.85; transform: scaleY(1.02) scaleX(0.98); }
+}
+
+@keyframes rotate-clockwise {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes typewriter {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink-cursor {
+  0%, 100% { border-right-color: var(--hot-pink); }
+  50% { border-right-color: transparent; }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0) rotate(var(--rotate)); }
+  25% { transform: translateX(-5px) rotate(var(--rotate)); }
+  50% { transform: translateX(5px) rotate(var(--rotate)); }
+  75% { transform: translateX(-3px) rotate(var(--rotate)); }
+}
+
+@keyframes star-twinkle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}

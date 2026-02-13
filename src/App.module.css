@@ -1,0 +1,13 @@
+.app {
+  min-height: 100vh;
+  position: relative;
+}
+
+.divider {
+  text-align: center;
+  color: var(--hot-pink);
+  font-size: 14px;
+  letter-spacing: 8px;
+  padding: 20px 0;
+  opacity: 0.6;
+}
