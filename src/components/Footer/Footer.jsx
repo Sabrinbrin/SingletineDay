@@ -1,26 +1,25 @@
 import { useState, useEffect } from 'react'
+import { recordVisit } from '../../services/visitors'
 import styles from './Footer.module.css'
 
 export default function Footer() {
-  // Fake visitor counter that increments from localStorage
   const [count, setCount] = useState(0)
 
   useEffect(() => {
-    const stored = parseInt(localStorage.getItem('singletine-visitors') || '0', 10)
-    const newCount = stored + 1
-    localStorage.setItem('singletine-visitors', String(newCount))
-    // Animate counter
-    let current = 0
-    const step = Math.max(1, Math.floor(newCount / 30))
-    const timer = setInterval(() => {
-      current += step
-      if (current >= newCount) {
-        current = newCount
-        clearInterval(timer)
-      }
-      setCount(current)
-    }, 30)
-    return () => clearInterval(timer)
+    recordVisit().then((total) => {
+      // Animate counter from 0 to total
+      let current = 0
+      const step = Math.max(1, Math.floor(total / 30))
+      const timer = setInterval(() => {
+        current += step
+        if (current >= total) {
+          current = total
+          clearInterval(timer)
+        }
+        setCount(current)
+      }, 30)
+      return () => clearInterval(timer)
+    })
   }, [])
 
   return (
